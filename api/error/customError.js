@@ -8,3 +8,29 @@ export class NotFoundError extends Error {
   }
 }
 
+export class BadRequestError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'BadRequestError';
+    this.statusCode = StatusCodes.BAD_REQUEST;
+  }
+}
+
+export class UnauthenticatedError extends Error { 
+  constructor(message) {
+    super(message);
+    this.name = 'UnauthenticatedError';
+    this.statusCode = StatusCodes.UNAUTHORIZED;
+  }
+}
+
+export class UnauthentizedError extends Error { 
+  constructor(message) {
+    super(message);
+    this.name = 'UnauthentizedError';
+    this.statusCode = StatusCodes.FORBIDDEN;
+  }
+}
+
+
+

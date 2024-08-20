@@ -1,55 +1,38 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import morgan from "morgan";
-import jobsRouter from "./routers/jobsRouter.js";
 import mongoose from "mongoose";
-import 'express-async-errors';
+import "express-async-errors";
+
 const app = express();
+
+// Router
+import jobsRouter from "./routers/jobsRouter.js";
+import authRouter from "./routers/authRouter.js";
+// middleware
+import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 
 dotenv.config();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
 app.use(express.json());
 
-// // axios
-// app.get("/getData", async (req, res) => {
-//   const response = await axios(
-//     "https://www.course-api.com/react-useReducer-cart-project"
-//   );
-//   res.send(response.data);
-//   console.log(response);
-//   // const FilterData = response.data.map((item) => ({
-//   //   title: item.title,
-//   //   price: item.price,
-//   // }));
-//   // res.send({message:"success",FilterData})
-//   // console.log(FilterData)
-// });
-
-// // start
-// app.get("/", (req, res) => {
-//   res.send("hello");
-// });
-
-// // post
-// app.post("/post", (req, res) => {
-//   console.log(req.body);
-//   res.json({ message: "Data received", data: req.body });
-// });
-
-// GetAllJob
+// Router api
 app.use("/api/v/jobs", jobsRouter);
+app.use("/api/v/auth", authRouter);
+
+
+
 
 // norify err
 app.use("*", (req, res) => {
-  res.status(404).json({ msg: "not found api" });
+  throw new NotFoundError(`Can't find ${req.originalUrl} on this server`);
 });
+
 // norify err
-app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).json({ msg: "something went wrong." });
-});
+app.use(errorHandlerMiddleware);
 
 const PORT = parseInt(process.env.PORT, 10) || 3000;
 
@@ -59,7 +42,6 @@ try {
     console.log("Server is runing on port ", PORT);
   });
 } catch (error) {
-  console.log(error)
-  process.exit(1)
+  console.log(error);
+  process.exit(1);
 }
- 

@@ -8,7 +8,7 @@ const DashBoardConText = createContext();
 const DashboardLayout = () => {
   const user = { name: "Folk", avatar: Avatar };
   const [showSidebar, setShowSidebar] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   const toggleShowSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -20,9 +20,9 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     if (isDarkTheme) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [isDarkTheme]);
 
