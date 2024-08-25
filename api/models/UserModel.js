@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Role } from "../utils/constants.js";
+import { createJWT } from "../utils/tokenUtils.js";
 const UserSchema = new mongoose.Schema(
   {
     
@@ -22,4 +23,11 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+UserSchema.methods.toJSON = function () {
+  let obj = this.toObject();
+  delete obj.password;
+  return obj;
+  
+};
 export default mongoose.model("User", UserSchema);

@@ -1,9 +1,14 @@
 import { body, param, validationResult } from "express-validator";
-import { BadRequestError, NotFoundError } from "../error/customError.js";
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthentizedError,
+} from "../error/customError.js";
 import { JOB_STATUS, JOB_Type, Role } from "../utils/constants.js";
 import mongoose from "mongoose";
 import Job from "../models/JobModel.js";
 import User from "../models/UserModel.js";
+
 export const withValidationErrors = (validateValues) => {
   return [
     validateValues,
@@ -14,6 +19,9 @@ export const withValidationErrors = (validateValues) => {
         const errorMessages = errors.array().map((error) => error.msg);
         if (errorMessages[0].startsWith("no job")) {
           throw new NotFoundError(errorMessages[0]);
+        }
+        if (errorMessages[0].startsWith("unauthorized")) {
+          throw new UnauthentizedError("unauthorized access");
         }
         throw new BadRequestError(errorMessages);
       }
@@ -36,20 +44,27 @@ export const validateJobInput = withValidationErrors([
 ]);
 
 export const validateJobId = withValidationErrors([
-  param("id").custom(async (value) => {
+  param("id").custom(async (value, { req }) => {
     const isValidId = mongoose.Types.ObjectId.isValid(value);
     if (!isValidId) {
       throw new BadRequestError("invalid MongoDB id");
     }
     const job = await Job.findById(value);
     if (!job) throw new NotFoundError(`no job with id : ${value}`);
+
+    const isAdmin = req.user.role === "admin";
+
+    const isOwner = req.user.userId === job.createdBy.toString();
+    if (!isAdmin && !isOwner) {
+      throw new UnauthentizedError("unauthorized access");
+    }
   }),
 ]);
 
 export const validateRegister = withValidationErrors([
   body("name").notEmpty().withMessage("name is required"),
   body("email")
-    .isEmail()
+    .notEmpty()
     .withMessage("email is required ")
     .isEmail()
     .withMessage("invalid email format ")
@@ -67,4 +82,30 @@ export const validateRegister = withValidationErrors([
   body("lastName").notEmpty().withMessage("last name is required"),
   body("location").notEmpty().withMessage("location is required"),
   body("role").isIn(Object.values(Role)).withMessage("role is invalid"),
+]);
+
+export const validateLogin = withValidationErrors([
+  body("email")
+    .notEmpty()
+    .withMessage("email is required ")
+    .isEmail()
+    .withMessage("invalid email format "),
+  body("password").notEmpty().withMessage("password is required"),
+]);
+
+export const validateUpdateUser = withValidationErrors([
+  body("name").notEmpty().withMessage("name is required"),
+  body("email")
+    .notEmpty()
+    .withMessage("email is required ")
+    .isEmail()
+    .withMessage("invalid email format ")
+    .custom(async (email, { req }) => {
+      const user = await User.findOne({ email });
+      if (user && user._id.toString() !== req.user.userId) {
+        throw new BadRequestError("email already exists");
+      }
+    }),
+  body("lastName").notEmpty().withMessage("last name is required"),
+  body("location").notEmpty().withMessage("location is required"),
 ]);
