@@ -4,6 +4,7 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import "express-async-errors";
 import cookieParser from "cookie-parser";
+import { NotFoundError } from "./error/customError.js";
 
 const app = express();
 

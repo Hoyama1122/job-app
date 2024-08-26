@@ -3,7 +3,7 @@ import Errorimg from "../assets/images/not-found.svg";
 
 const Error = () => {
   const error = useRouteError();
-
+  console.log(error)
   if (error.status === 404) {
     return (
       <div className="min-h-screen text-center flex flex-col items-center justify-center">
