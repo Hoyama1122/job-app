@@ -81,7 +81,7 @@ export const validateRegister = withValidationErrors([
     .withMessage("password must be at least 8 characters long"),
   body("lastName").notEmpty().withMessage("last name is required"),
   body("location").notEmpty().withMessage("location is required"),
-  body("role").isIn(Object.values(Role)).withMessage("role is invalid"),
+  body("role").isIn([Role.User, Role.Admin]).withMessage("role is invalid"),
 ]);
 
 export const validateLogin = withValidationErrors([

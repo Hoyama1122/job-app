@@ -5,7 +5,7 @@ import {
   getApplicationStats,
   getuser,
   updateUser,
-} from "../controllers/UserController.js";
+} from "../controllers/Usercontroller.js";
 import { validateUpdateUser } from "../middlewares/validationMiddleware.js";
 import { authorizePermissions } from "../middlewares/authMiddleware.js";
 

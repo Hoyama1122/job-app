@@ -4,7 +4,7 @@ const FormRow = ({ type, name, labelText, defaultValue }) => {
   return (
     <div className="mb-4">
       <label
-        className="block mb-[0.75rem] capitalize leading-6 tracking-[1px] text-sm font-600"
+        className="block mb-[0.75rem] capitalize leading-6 tracking-[1px] text-sm font-600 "
         htmlFor={name}
       >
         {labelText || name}
@@ -13,7 +13,7 @@ const FormRow = ({ type, name, labelText, defaultValue }) => {
         type={type}
         id={name}
         name={name}
-        className="w-full py-1.5 px-3 rounded bg-grey-50 text-grey-900 border-gray-300 border"
+        className="w-full py-1.5 px-3 rounded bg-grey-50 text-grey-900 border-gray-300 border "
         defaultValue={defaultValue || ""}
         required
       />

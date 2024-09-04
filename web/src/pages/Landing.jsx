@@ -19,7 +19,7 @@ const Landing = () => {
     setSelectedLanguage(text);
     setIsDropdownOpen(false);
   };
-  console.log(isDropdownOpen);
+
   return (
     <>
       <nav className="w-full max-w-[1120px] mx-auto h-[6rem] flex items-center px-4 sm:px-6 lg:px-8 justify-between">
