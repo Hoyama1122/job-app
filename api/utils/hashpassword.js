@@ -12,3 +12,4 @@ export const comparePassword = async (password, hashedPassword) => {
     return isMatch;
 };
 
+  

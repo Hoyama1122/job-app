@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const FormRowSelect = ({ name, labelText, list, defaultValue = "" }) => {
+const FormRowSelect = ({ name, labelText, list = [], defaultValue = "" }) => {
   return (
     <div>
       <div className="m-0 ">
@@ -14,13 +14,18 @@ const FormRowSelect = ({ name, labelText, list, defaultValue = "" }) => {
           defaultValue={defaultValue}
           id={name}
           name={name}
-          className="w-full py-1.5 px-3 rounded bg-grey-50 text-grey-900 border-gray-300 border  capitalize"
+          className="w-full py-1.5 px-3 rounded bg-grey-50 text-grey-900 border-gray-300 border capitalize"
         >
-          {list.map((status) => (
-            <option key={status} value={status}>
-              {status}
-            </option>
-          ))}
+          {/* ตรวจสอบว่า list เป็นอาร์เรย์ที่มีค่า */}
+          {Array.isArray(list) && list.length > 0 ? (
+            list.map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))
+          ) : (
+            <option disabled>No options available</option>
+          )}
         </select>
       </div>
     </div>

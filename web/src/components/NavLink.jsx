@@ -2,11 +2,13 @@ import links from "../utils/links";
 import { NavLink } from "react-router-dom";
 import { useDashBoardContext } from "../pages/DashboardLayout";
 const NavLinks = () => {
-  const { toggleShowSidebar } = useDashBoardContext();
+  const { toggleShowSidebar, user } = useDashBoardContext();
   return (
     <nav className="flex flex-col w-full">
       {links.map((link) => {
         const { text, path, icon } = link;
+        const { role } = user;
+        if (role !== "admin" && path === "admin") return;
         return (
           <NavLink
             to={path}
