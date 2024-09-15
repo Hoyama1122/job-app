@@ -28,6 +28,7 @@ import { action as editJobAction } from "./pages/EditJod";
 import { loader as editJobLoader } from "./pages/EditJod";
 import { action as deleteJobAction } from "./pages/DeleteJobs";
 import { loader as adminLoader } from "./pages/Admin";
+import { action as profileAction } from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,7 @@ const router = createBrowserRouter([
           {
             path: "profile",
             element: <Profile />,
+            action: profileAction,
           },
           {
             path: "admin",

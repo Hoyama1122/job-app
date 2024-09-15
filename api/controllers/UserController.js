@@ -3,6 +3,8 @@ import Job from "../models/JobModel.js";
 import { StatusCodes } from "http-status-codes";
 import bcrypt from "bcryptjs/dist/bcrypt.js";
 import { hashPassword } from "../utils/hashpassword.js";
+import cloudinary from "cloudinary";
+import { promises as fs } from "fs";
 
 export const getuser = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
@@ -17,19 +19,23 @@ export const getApplicationStats = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const { password, ...otherFields } = req.body;
+  const newUser = { ...req.body };
+  delete newUser.password;
 
-  if (password) {
-    otherFields.password = await hashPassword(password);
+  if (req.file) {
+    const result = await cloudinary.v2.uploader.upload(req.file.path);
+    await fs.unlink(req.file.path);  // ลบไฟล์ในระบบหลังจากอัปโหลด
+    newUser.avatar = result.secure_url;  // ใช้ secure_url เพื่อเก็บ URL ที่ถูกต้อง
+    newUser.avatarPublicId = result.public_id;
   }
 
-  const updatedUser = await User.findByIdAndUpdate(
-    req.user.userId,
-    otherFields,
-    {
-      new: true,
-    }
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: req.user.userId }, 
+    newUser,
+    { new: true }
   );
 
-  res.status(StatusCodes.OK).json({ msg: "Update success", updatedUser });
+  res.status(StatusCodes.OK).json({ user: updatedUser });
 };
+
+

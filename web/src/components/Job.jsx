@@ -49,7 +49,10 @@ const Job = ({
       <div className="p-4">
         <div className="grid mt-4 mb-6 grid-cols-1 gap-y-6 items-center sm:grid-cols-2">
           <Jobinfo icon={<FaLocationArrow />} text={jobLocation} />
-          <Jobinfo icon={<FaMoneyBill />} text={salary} />
+          <Jobinfo
+            icon={<FaMoneyBill />}
+            text={salary ? Number(salary).toLocaleString() : "N/A"}
+          />
           <Jobinfo icon={<FaCalendarAlt />} text={date} />
           <Jobinfo icon={<FaBriefcase />} text={jobType} />
 

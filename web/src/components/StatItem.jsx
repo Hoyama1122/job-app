@@ -15,8 +15,8 @@ const StatItem = ({ count, title, icon, color, bcg }) => {
             {count}
           </span>
           <span
-            className="w-[70px] h-[60px] rounded-md flex items-center justify-center"
-            style={{ backgroundColor: color }}
+            className="w-[70px] h-[60px] rounded-md flex items-center justify-center text-white"
+            style={{ backgroundColor: bcg }}
           >
             {icon}
           </span>

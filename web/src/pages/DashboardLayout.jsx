@@ -9,9 +9,11 @@ const DashBoardConText = createContext();
 export const loader = async () => {
   try {
     const { data } = await customFetch.get("/user/current-user");
+ 
     return data;
   } catch (error) {
-    return redirect("/");
+    console.error("Error fetching current user:", error);  // แสดงข้อผิดพลาดใน console
+    return redirect("/");  // ถ้าเกิดข้อผิดพลาด จะทำการ redirect ไปยังหน้าแรก
   }
 };
 
