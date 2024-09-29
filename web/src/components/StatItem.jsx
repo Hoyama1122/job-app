@@ -1,8 +1,10 @@
+import PropTypes from 'prop-types';
+
 const StatItem = ({ count, title, icon, color, bcg }) => {
   return (
     <>
       <div
-        className="p-8 rounded-md shadow-custom-3"
+        className="p-8 rounded-lg shadow-custom-3"
         style={{
           borderBottom: `5px solid ${color}`,
         }}
@@ -27,6 +29,14 @@ const StatItem = ({ count, title, icon, color, bcg }) => {
       </div>
     </>
   );
+};
+
+StatItem.propTypes = {
+  count: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  icon: PropTypes.node.isRequired,
+  color: PropTypes.string.isRequired,
+  bcg: PropTypes.string.isRequired,
 };
 
 export default StatItem;

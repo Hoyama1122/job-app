@@ -29,6 +29,7 @@ import { loader as editJobLoader } from "./pages/EditJod";
 import { action as deleteJobAction } from "./pages/DeleteJobs";
 import { loader as adminLoader } from "./pages/Admin";
 import { action as profileAction } from "./pages/Profile";
+import { loader as statsLoader } from "./pages/Stats";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,7 @@ const router = createBrowserRouter([
           {
             path: "stats",
             element: <Stats />,
+            loader: statsLoader,
           },
           {
             path: "all-jobs",

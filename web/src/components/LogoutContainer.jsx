@@ -29,13 +29,13 @@ const LogoutContainer = () => {
       </button>
 
       <div
-        className={`absolute top-12 left-0 w-full bg-primary-500 text-white text-center rounded-md shadow-lg transition-all duration-300 ease-in-out ${
+        className={`absolute top-12 left-0 w-full mt-2 bg-primary-500 text-white text-center rounded-md shadow-lg transition-all duration-300 ease-in-out ${
           showLogout ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
         <button
           onClick={logoutUser}
-          className="py-2 px-3 flex items-center font-600 justify-center bg-transparent border-transparent tracking-[1px] capitalize cursor-pointer w-full h-full"
+          className="py-2 px-3 flex  items-center font-600 justify-center bg-transparent border-transparent tracking-[1px] capitalize cursor-pointer w-full h-full"
         >
           Logout
           <div className="ml-1.5">

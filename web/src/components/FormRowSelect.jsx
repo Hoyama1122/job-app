@@ -1,6 +1,12 @@
 import PropTypes from "prop-types";
 
-const FormRowSelect = ({ name, labelText, list = [], defaultValue = "" }) => {
+const FormRowSelect = ({
+  name,
+  labelText,
+  list = [],
+  defaultValue = "",
+  onChange,
+}) => {
   return (
     <div>
       <div className="m-0 ">
@@ -11,6 +17,7 @@ const FormRowSelect = ({ name, labelText, list = [], defaultValue = "" }) => {
           {labelText || name}
         </label>
         <select
+          onChange={onChange}
           defaultValue={defaultValue}
           id={name}
           name={name}

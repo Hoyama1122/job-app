@@ -1,4 +1,11 @@
-import { Link, Form, redirect, useNavigation } from "react-router-dom";
+import {
+  Link,
+  Form,
+  redirect,
+  useNavigation,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import { FormRow, Logo } from "../components";
 import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
@@ -40,7 +47,21 @@ export const action = async ({ request }) => {
 const Login = () => {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-
+  const navigate = useNavigate();
+  const loginDeme = async () => {
+    const data = {
+      email: "test@gmail.com",
+      password: "fork1122gg",
+    };
+    try {
+      await customFetch.post("/auth/login", data);
+      toast.success("Login successful");
+      navigate("/dashboard");
+    } catch (error) {
+      toast.error(error?.response?.data?.msg);
+      return error;
+    }
+  };
   return (
     <>
       <div className="grid min-h-screen items-center">
@@ -63,6 +84,7 @@ const Login = () => {
             {isSubmitting ? "Submitting..." : "Login"}
           </button>
           <button
+            onClick={loginDeme}
             type="button"
             className="mt-4 cursor-pointer text-white bg-primary-500 border border-transparent rounded tracking-[1px] py-1.5 px-3 capitalize inline-block shadow-custom-1 transition ease-in-out duration-300 w-full hover:bg-primary-700 hover:shadow-custom-3"
           >

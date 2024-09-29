@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const FormRow = ({ type, name, labelText, defaultValue }) => {
+const FormRow = ({ type, name, labelText, defaultValue, onChange }) => {
   return (
     <div className="mb-4">
       <label
@@ -10,6 +10,7 @@ const FormRow = ({ type, name, labelText, defaultValue }) => {
         {labelText || name}
       </label>
       <input
+        onChange={onChange}
         type={type}
         id={name}
         name={name}
@@ -22,13 +23,13 @@ const FormRow = ({ type, name, labelText, defaultValue }) => {
 };
 FormRow.propTypes = {
   type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired, 
-  labelText: PropTypes.string, 
-  defaultValue: PropTypes.string, 
+  name: PropTypes.string.isRequired,
+  labelText: PropTypes.string,
+  defaultValue: PropTypes.string,
 };
 
 FormRow.defaultProps = {
-  labelText: "", 
-  defaultValue: "", 
+  labelText: "",
+  defaultValue: "",
 };
 export default FormRow;
